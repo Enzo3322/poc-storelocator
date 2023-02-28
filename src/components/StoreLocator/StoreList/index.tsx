@@ -48,9 +48,8 @@ const StoreList = (props: StoreListProps) => {
     if (totalPages < 5) {
       setPageNumbers(rangeArr(1, totalPages));
     }
-
-    console.log(currentPage, pageNumbers, currentPage);
-  }, [currentPage]);
+    console.log(currentPage, pageNumbers, currentPage, totalPages);
+  }, [currentPage, selectedCity, selectedState]);
 
   // função para mudar a página atual
   const handlePageChange = (pageNumber: number) => {
@@ -59,6 +58,12 @@ const StoreList = (props: StoreListProps) => {
 
   useEffect(() => {
     handlePageChange(1);
+    if (totalPages < 5) {
+      setPageNumbers(rangeArr(1, totalPages))
+    } else {
+      setPageNumbers(rangeArr(1, 5))
+    }
+
   }, [selectedCity, selectedState]);
 
   return (
