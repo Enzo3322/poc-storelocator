@@ -27,18 +27,19 @@ const StoreList = (props: StoreListProps) => {
 
   // criar uma lista de números de página para a paginação
 
-  const [pageNumbers, setPageNumbers] = useState(totalPages <= 5 ? rangeArr(1, totalPages) : rangeArr(1, 5))
+  const [pageNumbers, setPageNumbers] = useState(
+    totalPages <= 5 ? rangeArr(1, totalPages) : rangeArr(1, 5)
+  );
 
   useEffect(() => {
     if (currentPage > 3 && currentPage < totalPages - 2) {
-      setPageNumbers(rangeArr(currentPage - 2, currentPage + 2))
+      setPageNumbers(rangeArr(currentPage - 2, currentPage + 2));
     }
-    if (currentPage === totalPages - 2 && currentPage === totalPages - 1) {
-      setPageNumbers(rangeArr(totalPages - 4, totalPages))
+    if (currentPage === totalPages - 2 || currentPage === totalPages - 1) {
+      setPageNumbers(rangeArr(totalPages - 4, totalPages));
     }
-    console.log(currentPage, pageNumbers)
-  }, [currentPage])
-
+    console.log(currentPage, pageNumbers);
+  }, [currentPage]);
 
   // função para mudar a página atual
   const handlePageChange = (pageNumber: number) => {
@@ -46,8 +47,8 @@ const StoreList = (props: StoreListProps) => {
   };
 
   useEffect(() => {
-    handlePageChange(1)
-  }, [selectedCity, selectedState])
+    handlePageChange(1);
+  }, [selectedCity, selectedState]);
 
   return (
     <div>
