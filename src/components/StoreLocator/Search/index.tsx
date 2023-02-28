@@ -24,8 +24,7 @@ const Search = (props: SearchProps) => {
     cities,
   } = props;
   return (
-    <div>
-      Search
+    <div className="flexCol">
       <input
         type={"text"}
         placeholder="Pesquise pelo nome de uma loja, cidade ou estado."

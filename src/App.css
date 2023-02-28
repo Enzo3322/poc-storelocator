@@ -40,3 +40,14 @@
 .read-the-docs {
   color: #888;
 }
+
+.flexWrapper {
+  display: flex;
+  gap: 20px;
+}
+
+.flexCol {
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+}

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { citiesData, statesData, storesData } from "../../data";
 import Search from "./Search";
 import StoreList from "./StoreList";
 
@@ -7,12 +8,12 @@ const StoreLocatorPage = () => {
   const [selectedState, setSelectedState] = useState(null);
   const [selectedCity, setSelectedCity] = useState(null);
   const [searchTerm, setSearchTerm] = useState(null);
-  const [cities, setCities] = useState([]);
-  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState(citiesData);
+  const [states, setStates] = useState(statesData);
   const [selectedSearch, setSelectedSearch] = useState(null);
   //=================================//
   //states for stores list component
-  const [stores, setStores] = useState([]);
+  const [stores, setStores] = useState(storesData);
 
   useEffect(() => {
     //quando o componente renderizar fazemos a chamada para o back onde recebemos os estados cidades e lojas
@@ -25,7 +26,7 @@ const StoreLocatorPage = () => {
 
   return (
     <div>
-      <div>
+      <div className="flexWrapper">
         <Search
           selectedState={selectedState}
           setSelectedState={setSelectedState}
