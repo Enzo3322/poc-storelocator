@@ -33,10 +33,7 @@ const StoreList = (props: StoreListProps) => {
     if (currentPage > 3 && currentPage < totalPages - 2) {
       setPageNumbers(rangeArr(currentPage - 2, currentPage + 2))
     }
-    if (currentPage === totalPages - 2) {
-      setPageNumbers(rangeArr(totalPages - 4, totalPages))
-    }
-    if (currentPage === totalPages - 1) {
+    if (currentPage === totalPages - 2 && currentPage === totalPages - 1) {
       setPageNumbers(rangeArr(totalPages - 4, totalPages))
     }
     console.log(currentPage, pageNumbers)
