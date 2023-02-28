@@ -1,5 +1,6 @@
 import Pagination from "./Pagination";
 import StoreItem from "./StoreItem";
+import { rangeArr } from "../../../utils/rangeArr";
 
 interface StoreListProps {
   stores: Record<string, string>[];
@@ -7,10 +8,10 @@ interface StoreListProps {
   selectedState?: string;
 }
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const StoreList = (props: StoreListProps) => {
-  const { stores } = props;
+  const { stores, selectedCity, selectedState } = props;
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
@@ -25,15 +26,28 @@ const StoreList = (props: StoreListProps) => {
   const totalPages = Math.ceil(stores.length / itemsPerPage);
 
   // criar uma lista de números de página para a paginação
-  const pageNumbers = [];
-  for (let i = 1; i <= totalPages; i++) {
-    pageNumbers.push(i);
-  }
+
+  const [pageNumbers, setPageNumbers] = useState(totalPages <= 5 ? rangeArr(1, totalPages) : rangeArr(1, 5))
+
+  useEffect(() => {
+    if (currentPage > 3 && currentPage < totalPages - 2) {
+      setPageNumbers(rangeArr(currentPage - 2, currentPage + 2))
+    }
+    if (currentPage === totalPages - 1 && currentPage === totalPages - 2) {
+      setPageNumbers(rangeArr(totalPages - 4, totalPages))
+    }
+    console.log(currentPage, pageNumbers)
+  }, [currentPage])
+
 
   // função para mudar a página atual
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
+
+  useEffect(() => {
+    handlePageChange(1)
+  }, [selectedCity, selectedState])
 
   return (
     <div>
