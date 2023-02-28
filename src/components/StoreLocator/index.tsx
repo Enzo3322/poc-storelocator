@@ -45,6 +45,8 @@ const StoreLocatorPage = () => {
           setSearchTerm={setSearchTerm}
           cities={cities}
           states={states}
+          stores={stores}
+          setStores={setStores}
         />
         <StoreList
           stores={stores}

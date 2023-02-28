@@ -1,4 +1,5 @@
-import { SetStateAction } from "react";
+import { SetStateAction, useEffect } from "react";
+import { storesData } from "../../../data";
 
 interface SearchProps {
   selectedState?: string;
@@ -7,8 +8,10 @@ interface SearchProps {
   setSelectedCity: SetStateAction<any>;
   searchTerm: string | null;
   setSearchTerm: SetStateAction<any>;
-  cities: string[] | undefined[];
+  cities: any;
   states: string[];
+  stores: any;
+  setStores: SetStateAction<any>;
 }
 const Search = (props: SearchProps) => {
   const {
@@ -20,7 +23,19 @@ const Search = (props: SearchProps) => {
     setSearchTerm,
     searchTerm,
     cities,
+    stores,
+    setStores,
   } = props;
+
+  useEffect(() => {
+    const filteredStores = storesData.filter((store: any) => {
+      console.log(store)
+      return store.nomeLoja.includes(searchTerm)
+    })
+    if (searchTerm) {
+      setStores(filteredStores)
+    }
+  }, [searchTerm])
 
   return (
     <div className="flexCol">
@@ -45,7 +60,7 @@ const Search = (props: SearchProps) => {
           value={selectedCity ?? "SELECIONE UMA CIDADE"}
           onChange={(e) => setSelectedCity(e.target.value)}
         >
-          {cities?.map((o) => (
+          {cities?.map((o: string) => (
             <option key={o} value={o}>
               {o}
             </option>
