@@ -34,11 +34,22 @@ const StoreList = (props: StoreListProps) => {
   useEffect(() => {
     if (currentPage > 3 && currentPage < totalPages - 2) {
       setPageNumbers(rangeArr(currentPage - 2, currentPage + 2));
+    } else if (currentPage === 2) {
+      setPageNumbers(rangeArr(currentPage - 1, currentPage + 3));
     }
-    if (currentPage === totalPages - 2 || currentPage === totalPages - 1) {
-      setPageNumbers(rangeArr(totalPages - 4, totalPages));
+    if (currentPage === 3) {
+      setPageNumbers(rangeArr(currentPage - 2, currentPage + 2))
     }
-    console.log(currentPage, pageNumbers);
+    if (currentPage === totalPages - 2) {
+      setPageNumbers(rangeArr(currentPage - 2, currentPage + 2))
+    } else if (currentPage === totalPages - 1) {
+      setPageNumbers(rangeArr(currentPage - 3, currentPage + 1))
+    }
+    if (totalPages < 5) {
+      setPageNumbers(rangeArr(1, totalPages));
+    }
+
+    console.log(currentPage, pageNumbers, currentPage);
   }, [currentPage]);
 
   // função para mudar a página atual
