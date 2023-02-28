@@ -3,6 +3,8 @@ import StoreItem from "./StoreItem";
 
 interface StoreListProps {
   stores: Record<string, string>[];
+  selectedCity?: string;
+  selectedState?: string;
 }
 
 import React, { useState } from "react";

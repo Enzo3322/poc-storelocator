@@ -4,7 +4,7 @@ interface StoreItemProps {
 
 const StoreItem = (props: StoreItemProps) => {
   const { store } = props;
-  return <div>{store.storeName}</div>;
+  return <div>{store.nomeLoja}</div>;
 };
 
 export default StoreItem;

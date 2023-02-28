@@ -1,15 +1,13 @@
 import { SetStateAction } from "react";
 
 interface SearchProps {
-  selectedState: string | null;
+  selectedState?: string;
   setSelectedState: SetStateAction<any>;
-  selectedCity: string | null;
+  selectedCity?: string;
   setSelectedCity: SetStateAction<any>;
-  selectedSearch: string | null;
-  setSelectedSearch: SetStateAction<any>;
   searchTerm: string | null;
   setSearchTerm: SetStateAction<any>;
-  cities: string[];
+  cities: string[] | undefined[];
   states: string[];
 }
 const Search = (props: SearchProps) => {
@@ -23,6 +21,7 @@ const Search = (props: SearchProps) => {
     searchTerm,
     cities,
   } = props;
+
   return (
     <div className="flexCol">
       <input
@@ -46,7 +45,7 @@ const Search = (props: SearchProps) => {
           value={selectedCity ?? "SELECIONE UMA CIDADE"}
           onChange={(e) => setSelectedCity(e.target.value)}
         >
-          {cities.map((o) => (
+          {cities?.map((o) => (
             <option key={o} value={o}>
               {o}
             </option>

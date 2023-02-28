@@ -1,27 +1,36 @@
 import { useEffect, useState } from "react";
-import { citiesData, statesData, storesData } from "../../data";
+import { storesData } from "../../data";
 import Search from "./Search";
 import StoreList from "./StoreList";
 
 const StoreLocatorPage = () => {
-  //==states for search component=====//
-  const [selectedState, setSelectedState] = useState(null);
-  const [selectedCity, setSelectedCity] = useState(null);
+  const [selectedState, setSelectedState] = useState();
+  const [selectedCity, setSelectedCity] = useState();
   const [searchTerm, setSearchTerm] = useState(null);
-  const [cities, setCities] = useState(citiesData);
-  const [states, setStates] = useState(statesData);
-  const [selectedSearch, setSelectedSearch] = useState(null);
-  //=================================//
-  //states for stores list component
-  const [stores, setStores] = useState(storesData);
+  const cities = [
+    ...new Set(
+      storesData.map((store) => {
+        if (store.estado === selectedState) {
+          return store.cidade;
+        }
+      })
+    ),
+  ];
+  const states = [...new Set(storesData.map((store) => store.estado))];
+  const allStores = storesData;
+  const [stores, setStores] = useState(allStores);
 
   useEffect(() => {
-    //quando o componente renderizar fazemos a chamada para o back onde recebemos os estados cidades e lojas
-    //após a chamada setamos seu retorno nos estados
-  }, []);
+    setSelectedCity(undefined);
+  }, [selectedState]);
 
   useEffect(() => {
-    //
+    if (selectedState) {
+      setStores(allStores.filter((store) => store.estado === selectedState));
+    }
+    if (selectedCity) {
+      setStores(allStores.filter((store) => store.cidade === selectedCity));
+    }
   }, [selectedState, selectedCity]);
 
   return (
@@ -32,14 +41,16 @@ const StoreLocatorPage = () => {
           setSelectedState={setSelectedState}
           selectedCity={selectedCity}
           setSelectedCity={setSelectedCity}
-          selectedSearch={selectedSearch}
-          setSelectedSearch={setSelectedSearch}
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
           cities={cities}
           states={states}
         />
-        <StoreList stores={stores} />
+        <StoreList
+          stores={stores}
+          selectedCity={selectedCity}
+          selectedState={selectedState}
+        />
       </div>
     </div>
   );
