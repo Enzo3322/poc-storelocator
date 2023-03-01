@@ -28,37 +28,32 @@ const Search = (props: SearchProps) => {
   } = props
 
   const searchLowerCase = searchTerm?.toLowerCase()
-
-  useEffect(() => {
-    const storeByState = storesData.filter((store) => {
-      return (
-        store?.estado === selectedState
-      )
-    })
-    const storeByCity = storesData.filter((store) => {
-      return (
-        store?.cidade === selectedCity
-      )
-    })
-    const filteredStores = storesData.filter((store: any) => {
-      if (selectedState && !storeByState.includes(store)) {
-        return false
-      } else if (selectedCity && !storeByCity.includes(store)) {
-        return false;
-      } else {
+  const termFilterSearch =
+    useEffect(() => {
+      const filteredStores = storesData.filter((store: any) => {
         return (
           store.nomeLoja.toLowerCase().includes(searchLowerCase) ||
           store.cidade.toLowerCase().includes(searchLowerCase) ||
           store.estado.toLowerCase().includes(searchLowerCase)
-
         )
+      })
+      const filteredByRegion = filteredStores.filter((store) => {
+        if (store.cidade === selectedCity) {
+          return true
+        }
+        if (store.estado === selectedState) {
+          return true
+        }
+        return false
+      })
+      if (searchTerm) {
+        setStores(filteredStores)
       }
-    })
-    if (searchTerm) {
-      setStores(filteredStores)
-    }
-    console.log(searchTerm)
-  }, [searchTerm])
+      if (selectedCity || selectedState) {
+        setStores(filteredByRegion)
+      }
+      console.log(searchTerm)
+    }, [searchTerm])
 
   return (
     <div className="flexCol">

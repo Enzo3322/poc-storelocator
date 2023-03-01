@@ -6,7 +6,7 @@ import StoreList from "./StoreList";
 const StoreLocatorPage = () => {
   const [selectedState, setSelectedState] = useState();
   const [selectedCity, setSelectedCity] = useState();
-  const [searchTerm, setSearchTerm] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
   const cities = [
     ...new Set(
       storesData.map((store) => {
