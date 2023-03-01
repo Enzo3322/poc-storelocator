@@ -1,17 +1,17 @@
-import { SetStateAction, useEffect } from "react";
-import { storesData } from "../../../data";
+import { SetStateAction, useEffect } from 'react'
+import { storesData } from '../../../data'
 
 interface SearchProps {
-  selectedState?: string;
-  setSelectedState: SetStateAction<any>;
-  selectedCity?: string;
-  setSelectedCity: SetStateAction<any>;
-  searchTerm: string | null;
-  setSearchTerm: SetStateAction<any>;
-  cities: any;
-  states: string[];
-  stores: any;
-  setStores: SetStateAction<any>;
+  selectedState?: string
+  setSelectedState: SetStateAction<any>
+  selectedCity?: string
+  setSelectedCity: SetStateAction<any>
+  searchTerm: string | null
+  setSearchTerm: SetStateAction<any>
+  cities: any
+  states: string[]
+  stores: any
+  setStores: SetStateAction<any>
 }
 const Search = (props: SearchProps) => {
   const {
@@ -24,13 +24,18 @@ const Search = (props: SearchProps) => {
     searchTerm,
     cities,
     stores,
-    setStores,
-  } = props;
+    setStores
+  } = props
 
+  console.log(searchTerm)
+  const searchLowerCase = searchTerm?.toLowerCase()
   useEffect(() => {
     const filteredStores = storesData.filter((store: any) => {
-      console.log(store)
-      return store.nomeLoja.includes(searchTerm)
+      return (
+        store.nomeLoja.toLowerCase().includes(searchLowerCase) ||
+        store.cidade.toLowerCase().includes(searchLowerCase) ||
+        store.estado.toLowerCase().includes(searchLowerCase)
+      )
     })
     if (searchTerm) {
       setStores(filteredStores)
@@ -40,16 +45,16 @@ const Search = (props: SearchProps) => {
   return (
     <div className="flexCol">
       <input
-        type={"text"}
+        type={'text'}
         placeholder="Pesquise pelo nome de uma loja, cidade ou estado."
-        onChange={(e) => setSearchTerm(e.target.value)}
-        value={searchTerm ?? ""}
+        onChange={e => setSearchTerm(e.target.value)}
+        value={searchTerm ?? ''}
       />
       <select
-        value={selectedState ?? "SELECIONE UM ESTADO"}
-        onChange={(e) => setSelectedState(e.target.value)}
+        value={selectedState ?? 'SELECIONE UM ESTADO'}
+        onChange={e => setSelectedState(e.target.value)}
       >
-        {states.map((o) => (
+        {states.map(o => (
           <option key={o} value={o}>
             {o}
           </option>
@@ -57,8 +62,8 @@ const Search = (props: SearchProps) => {
       </select>
       {selectedState && (
         <select
-          value={selectedCity ?? "SELECIONE UMA CIDADE"}
-          onChange={(e) => setSelectedCity(e.target.value)}
+          value={selectedCity ?? 'SELECIONE UMA CIDADE'}
+          onChange={e => setSelectedCity(e.target.value)}
         >
           {cities?.map((o: string) => (
             <option key={o} value={o}>
@@ -68,7 +73,7 @@ const Search = (props: SearchProps) => {
         </select>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default Search;
+export default Search
