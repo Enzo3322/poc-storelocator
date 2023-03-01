@@ -63,7 +63,7 @@ const StoreList = (props: StoreListProps) => {
     } else {
       setPageNumbers(rangeArr(1, 5))
     }
-  }, [selectedCity, selectedState])
+  }, [selectedCity, selectedState, totalPages])
 
   return (
     <div>

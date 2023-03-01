@@ -27,19 +27,37 @@ const Search = (props: SearchProps) => {
     setStores
   } = props
 
-  console.log(searchTerm)
   const searchLowerCase = searchTerm?.toLowerCase()
+
   useEffect(() => {
-    const filteredStores = storesData.filter((store: any) => {
+    const storeByState = storesData.filter((store) => {
       return (
-        store.nomeLoja.toLowerCase().includes(searchLowerCase) ||
-        store.cidade.toLowerCase().includes(searchLowerCase) ||
-        store.estado.toLowerCase().includes(searchLowerCase)
+        store?.estado === selectedState
       )
+    })
+    const storeByCity = storesData.filter((store) => {
+      return (
+        store?.cidade === selectedCity
+      )
+    })
+    const filteredStores = storesData.filter((store: any) => {
+      if (selectedState && !storeByState.includes(store)) {
+        return false
+      } else if (selectedCity && !storeByCity.includes(store)) {
+        return false;
+      } else {
+        return (
+          store.nomeLoja.toLowerCase().includes(searchLowerCase) ||
+          store.cidade.toLowerCase().includes(searchLowerCase) ||
+          store.estado.toLowerCase().includes(searchLowerCase)
+
+        )
+      }
     })
     if (searchTerm) {
       setStores(filteredStores)
     }
+    console.log(searchTerm)
   }, [searchTerm])
 
   return (
