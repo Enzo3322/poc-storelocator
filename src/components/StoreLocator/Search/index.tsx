@@ -27,33 +27,28 @@ const Search = (props: SearchProps) => {
     setStores
   } = props
 
-  const searchLowerCase = searchTerm?.toLowerCase()
-  const termFilterSearch =
-    useEffect(() => {
-      const filteredStores = storesData.filter((store: any) => {
-        return (
-          store.nomeLoja.toLowerCase().includes(searchLowerCase) ||
-          store.cidade.toLowerCase().includes(searchLowerCase) ||
-          store.estado.toLowerCase().includes(searchLowerCase)
-        )
-      })
-      const filteredByRegion = filteredStores.filter((store) => {
-        if (store.cidade === selectedCity) {
-          return true
-        }
-        if (store.estado === selectedState) {
-          return true
-        }
-        return false
-      })
-      if (searchTerm) {
-        setStores(filteredStores)
-      }
-      if (selectedCity || selectedState) {
-        setStores(filteredByRegion)
-      }
-      console.log(searchTerm)
-    }, [searchTerm])
+  useEffect(() => {
+    const searchLowerCase = searchTerm?.toLowerCase()
+    const storeByState = storesData.filter((store) => { return (store.estado === selectedState) })
+    const storeByCity = storesData.filter((store) => { return (store.cidade === selectedCity) })
+    const allStores = stores
+    const filteredStores = storesData.filter((store: any) => {
+      return (
+        store.nomeLoja.toLowerCase().includes(searchLowerCase) ||
+        store.cidade.toLowerCase().includes(searchLowerCase) ||
+        store.estado.toLowerCase().includes(searchLowerCase)
+      )
+    })
+    const handleSearch = ({ selectedCity, selectedState, }: any) => {
+
+      return
+    }
+    if (searchTerm) {
+      setStores(filteredStores)
+    }
+    console.log(filteredStores)
+    console.log(searchTerm)
+  }, [searchTerm])
 
   return (
     <div className="flexCol">
@@ -64,9 +59,12 @@ const Search = (props: SearchProps) => {
         value={searchTerm ?? ''}
       />
       <select
-        value={selectedState ?? 'SELECIONE UM ESTADO'}
+        value={selectedState}
         onChange={e => setSelectedState(e.target.value)}
       >
+        <option defaultChecked>
+          SELECIONE UM ESTADO
+        </option>
         {states.map(o => (
           <option key={o} value={o}>
             {o}
@@ -75,9 +73,12 @@ const Search = (props: SearchProps) => {
       </select>
       {selectedState && (
         <select
-          value={selectedCity ?? 'SELECIONE UMA CIDADE'}
+          value={selectedCity}
           onChange={e => setSelectedCity(e.target.value)}
         >
+          <option defaultChecked>
+            SELECIONE UMA CIDADE
+          </option>
           {cities?.map((o: string) => (
             <option key={o} value={o}>
               {o}
