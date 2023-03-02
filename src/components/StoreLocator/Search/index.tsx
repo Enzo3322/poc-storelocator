@@ -27,28 +27,45 @@ const Search = (props: SearchProps) => {
     setStores
   } = props
 
-  useEffect(() => {
-    const searchLowerCase = searchTerm?.toLowerCase()
-    const storeByState = storesData.filter((store) => { return (store.estado === selectedState) })
-    const storeByCity = storesData.filter((store) => { return (store.cidade === selectedCity) })
-    const allStores = stores
-    const filteredStores = storesData.filter((store: any) => {
-      return (
-        store.nomeLoja.toLowerCase().includes(searchLowerCase) ||
-        store.cidade.toLowerCase().includes(searchLowerCase) ||
-        store.estado.toLowerCase().includes(searchLowerCase)
+  const searchLowerCase = searchTerm?.toLowerCase()
+  function handleSearch({ selectedCity, selectedState, allStores, searchTerm }: any) {
+    if (selectedState && !searchTerm && !selectedCity) {
+      const storeByState = allStores.filter((store: any) => { return (store.estado === selectedState) })
+      return setStores(storeByState)
+    }
+    if (selectedCity && !searchTerm) {
+      const storeByCity = allStores.filter((store: any) => {
+        (store.cidade === selectedCity)
+      })
+      return setStores(storeByCity)
+    }
+    if (searchTerm && selectedState && !selectedCity) {
+      const storeSearchState = allStores.filter((store: any) => {
+        return (store.estado === selectedState && store.nomeLoja.toLowerCase().includes(searchTerm.toLowerCase()))
+      })
+      return setStores(storeSearchState)
+    }
+    if (searchTerm && selectedCity) {
+      const storeSearchCity = allStores.filter((store: any) => {
+        return (store.cidade === selectedCity && store.nomeLoja.toLowerCase().includes(searchTerm.toLowerCase()))
+      })
+      return setStores(storeSearchCity)
+    }
+    if (!selectedCity && !selectedState && searchTerm) {
+      const filteredStores: any = allStores.filter((store: any) => {
+        return store.nomeLoja.toLowerCase().includes(searchTerm.toLowerCase())
+      }
       )
-    })
-    const handleSearch = ({ selectedCity, selectedState, }: any) => {
-
-      return
+      console.log({ filteredStores })
+      return setStores(filteredStores)
     }
-    if (searchTerm) {
-      setStores(filteredStores)
+    if (!selectedCity && !selectedState && !searchTerm) {
+      return setStores(allStores)
     }
-    console.log(filteredStores)
-    console.log(searchTerm)
-  }, [searchTerm])
+  }
+  useEffect(() => {
+    handleSearch({ selectedCity, selectedState, allStores: storesData, searchTerm })
+  }, [searchTerm, selectedCity, selectedState])
 
   return (
     <div className="flexCol">
