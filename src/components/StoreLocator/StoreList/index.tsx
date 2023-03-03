@@ -30,26 +30,7 @@ const StoreList = (props: StoreListProps) => {
   const [pageNumbers, setPageNumbers] = useState(
     totalPages <= 5 ? rangeArr(1, totalPages) : rangeArr(1, 5)
   )
-
-  // useEffect(() => {
-  //   if (currentPage > 3 && currentPage < totalPages - 2) {
-  //     setPageNumbers(rangeArr(currentPage - 2, currentPage + 2))
-  //   } else if (currentPage === 2) {
-  //     setPageNumbers(rangeArr(currentPage - 1, currentPage + 3))
-  //   }
-  //   if (currentPage === 3) {
-  //     setPageNumbers(rangeArr(currentPage - 2, currentPage + 2))
-  //   }
-  //   if (currentPage === totalPages - 2) {
-  //     setPageNumbers(rangeArr(currentPage - 2, currentPage + 2))
-  //   } else if (currentPage === totalPages - 1) {
-  //     setPageNumbers(rangeArr(currentPage - 3, currentPage + 1))
-  //   }
-  //   if (totalPages < 5) {
-  //     setPageNumbers(rangeArr(1, totalPages))
-  //   }
-  // }, [currentPage, selectedCity, selectedState])
-
+  
   useEffect(() => {
     const getPageNumbers = (start: any, end: any) =>
       setPageNumbers(rangeArr(start, end))
