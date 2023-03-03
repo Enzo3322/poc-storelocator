@@ -93,7 +93,7 @@ const Search = (props: SearchProps) => {
         value={selectedState}
         onChange={e => setSelectedState(e.target.value)}
       >
-        <option defaultChecked>SELECIONE UM ESTADO</option>
+        <option defaultChecked defaultValue=''>SELECIONE UM ESTADO</option>
         {states.map(o => (
           <option key={o} value={o}>
             {o}
@@ -105,7 +105,7 @@ const Search = (props: SearchProps) => {
           value={selectedCity}
           onChange={e => setSelectedCity(e.target.value)}
         >
-          <option defaultChecked>SELECIONE UMA CIDADE</option>
+          <option defaultChecked defaultValue=''>SELECIONE UMA CIDADE</option>
           {cities?.map((o: string) => (
             <option key={o} value={o}>
               {o}
