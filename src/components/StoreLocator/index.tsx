@@ -1,37 +1,49 @@
-import { useEffect, useState } from "react";
-import { storesData } from "../../data";
-import Search from "./Search";
-import StoreList from "./StoreList";
+import { useEffect, useState } from 'react'
+import { storesData } from '../../data'
+import Search from './Search'
+import StoreList from './StoreList'
 
 const StoreLocatorPage = () => {
-  const [selectedState, setSelectedState] = useState();
-  const [selectedCity, setSelectedCity] = useState();
-  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedState, setSelectedState] = useState()
+  const [selectedCity, setSelectedCity] = useState()
+  const [searchTerm, setSearchTerm] = useState('')
   const cities = [
     ...new Set(
-      storesData.map((store) => {
+      storesData.map(store => {
         if (store.estado === selectedState) {
-          return store.cidade;
+          return store.cidade
         }
       })
-    ),
-  ];
-  const states = [...new Set(storesData.map((store) => store.estado))];
-  const allStores = storesData;
-  const [stores, setStores] = useState(allStores);
+    )
+  ]
+  const states = [...new Set(storesData.map(store => store.estado))]
+  const allStores = storesData
+  const [stores, setStores] = useState(allStores)
 
   useEffect(() => {
-    setSelectedCity(undefined);
-  }, [selectedState]);
+    setSelectedCity(undefined)
+  }, [selectedState])
 
   useEffect(() => {
     if (selectedState) {
-      setStores(allStores.filter((store) => store.estado === selectedState));
+      setStores(
+        allStores.filter(
+          store =>
+            store.estado === selectedState &&
+            store.nomeLoja.toLowerCase().includes(searchTerm?.toLowerCase())
+        )
+      )
     }
     if (selectedCity) {
-      setStores(allStores.filter((store) => store.cidade === selectedCity));
+      setStores(
+        allStores.filter(
+          store =>
+            store.cidade === selectedCity &&
+            store.nomeLoja.toLowerCase().includes(searchTerm?.toLowerCase())
+        )
+      )
     }
-  }, [selectedState, selectedCity]);
+  }, [selectedState, selectedCity])
 
   return (
     <div>
@@ -55,7 +67,7 @@ const StoreLocatorPage = () => {
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default StoreLocatorPage;
+export default StoreLocatorPage
