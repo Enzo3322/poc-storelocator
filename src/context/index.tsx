@@ -1,4 +1,5 @@
 import {
+  FC,
   createContext,
   ReactElement,
   ReactNode,
@@ -21,9 +22,9 @@ export interface IStoreContext {
   setStores: SetStateAction<any>
 }
 
-export const StoreContext = createContext<IStoreContext>({} as IStoreContext)
+export const StoreContext = createContext<IStoreContext | any>(null)
 
-const StoreContextProvider = ({ children }: { children: ReactNode }) => {
+const StoreContextProvider: FC<ReactNode> = ({ children }: any) => {
   const [selectedState, setSelectedState] = useState()
   const [selectedCity, setSelectedCity] = useState()
   const [searchTerm, setSearchTerm] = useState('')
