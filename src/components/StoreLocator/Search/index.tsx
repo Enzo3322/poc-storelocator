@@ -23,11 +23,9 @@ const Search = (props: SearchProps) => {
     setSearchTerm,
     searchTerm,
     cities,
-    stores,
     setStores
   } = props
 
-  const searchLowerCase = searchTerm?.toLowerCase()
   function handleSearch({
     selectedCity,
     selectedState,
@@ -38,14 +36,12 @@ const Search = (props: SearchProps) => {
       const storeByState = allStores.filter((store: any) => {
         return store.estado === selectedState
       })
-      console.log({ storeByState }) //funciona
       return setStores(storeByState)
     }
     if (selectedCity && !searchTerm) {
       const storeByCity = allStores.filter((store: any) => {
-        store.cidade === selectedCity
+        return store.cidade === selectedCity
       })
-      console.log({ storeByCity }) //erro
       return setStores(storeByCity)
     }
     if (searchTerm && selectedState && !selectedCity) {
@@ -55,7 +51,6 @@ const Search = (props: SearchProps) => {
           store.nomeLoja.toLowerCase().includes(searchTerm.toLowerCase())
         )
       })
-      console.log({ storeSearchState }) //funciona
       return setStores(storeSearchState)
     }
     if (searchTerm && selectedCity) {
@@ -65,19 +60,16 @@ const Search = (props: SearchProps) => {
           store.nomeLoja.toLowerCase().includes(searchTerm.toLowerCase())
         )
       })
-      console.log({ storeSearchCity }) //funciona
       return setStores(storeSearchCity)
     }
     if (!selectedCity && !selectedState && searchTerm) {
       const filteredStores: any = allStores.filter((store: any) => {
         return store.nomeLoja.toLowerCase().includes(searchTerm.toLowerCase())
       })
-      console.log({ filteredStores }) //funciona
       return setStores(filteredStores)
     }
     if (!selectedCity && !selectedState && !searchTerm) {
-      console.log({ allStores })
-      return setStores(allStores) //funciona
+      return setStores(allStores)
     }
   }
   useEffect(() => {

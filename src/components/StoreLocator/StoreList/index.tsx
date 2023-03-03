@@ -31,27 +31,40 @@ const StoreList = (props: StoreListProps) => {
     totalPages <= 5 ? rangeArr(1, totalPages) : rangeArr(1, 5)
   )
 
+  // useEffect(() => {
+  //   if (currentPage > 3 && currentPage < totalPages - 2) {
+  //     setPageNumbers(rangeArr(currentPage - 2, currentPage + 2))
+  //   } else if (currentPage === 2) {
+  //     setPageNumbers(rangeArr(currentPage - 1, currentPage + 3))
+  //   }
+  //   if (currentPage === 3) {
+  //     setPageNumbers(rangeArr(currentPage - 2, currentPage + 2))
+  //   }
+  //   if (currentPage === totalPages - 2) {
+  //     setPageNumbers(rangeArr(currentPage - 2, currentPage + 2))
+  //   } else if (currentPage === totalPages - 1) {
+  //     setPageNumbers(rangeArr(currentPage - 3, currentPage + 1))
+  //   }
+  //   if (totalPages < 5) {
+  //     setPageNumbers(rangeArr(1, totalPages))
+  //   }
+  // }, [currentPage, selectedCity, selectedState])
+
   useEffect(() => {
-    if (currentPage > 3 && currentPage < totalPages - 2) {
-      setPageNumbers(rangeArr(currentPage - 2, currentPage + 2))
-    } else if (currentPage === 2) {
-      setPageNumbers(rangeArr(currentPage - 1, currentPage + 3))
-    }
-    if (currentPage === 3) {
-      setPageNumbers(rangeArr(currentPage - 2, currentPage + 2))
-    }
-    if (currentPage === totalPages - 2) {
-      setPageNumbers(rangeArr(currentPage - 2, currentPage + 2))
-    } else if (currentPage === totalPages - 1) {
-      setPageNumbers(rangeArr(currentPage - 3, currentPage + 1))
-    }
+    const getPageNumbers = (start: any, end: any) =>
+      setPageNumbers(rangeArr(start, end))
+      
     if (totalPages < 5) {
-      setPageNumbers(rangeArr(1, totalPages))
+      getPageNumbers(1, totalPages)
+    } else if (currentPage <= 3) {
+      getPageNumbers(1, 5)
+    } else if (currentPage >= totalPages - 2) {
+      getPageNumbers(totalPages - 4, totalPages)
+    } else {
+      getPageNumbers(currentPage - 2, currentPage + 2)
     }
-    console.log(currentPage, pageNumbers, currentPage, totalPages)
   }, [currentPage, selectedCity, selectedState])
 
-  // função para mudar a página atual
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber)
   }
