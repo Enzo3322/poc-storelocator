@@ -24,7 +24,7 @@ const {
   searchTerm,
   cities,
   setStores
-} = useContext<any>(StoreContext)
+} = useContext(StoreContext)
 const Search = () => {
   // const {
   //   selectedState,
