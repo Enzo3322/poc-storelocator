@@ -3,28 +3,18 @@ import StoreItem from './StoreItem'
 import { rangeArr } from '../../../utils/rangeArr'
 import { StoreContext, IStoreContext } from '../../../context'
 
-import React, { useEffect, useState, useContext } from 'react'
+import { useEffect, useContext } from 'react'
 
 const StoreList = () => {
-  const { stores, selectedCity, selectedState } = useContext<any>(StoreContext)
-  const [currentPage, setCurrentPage] = useState(1)
-  const itemsPerPage = 5
-
-  // calcular o índice do primeiro item da página atual
-  const indexOfLastItem = currentPage * itemsPerPage
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage
-
-  // definir os itens que serão renderizados na página atual
-  const currentItems = stores.slice(indexOfFirstItem, indexOfLastItem)
-
-  // calcular o número total de páginas
-  const totalPages = Math.ceil(stores.length / itemsPerPage)
-
-  // criar uma lista de números de página para a paginação
-
-  const [pageNumbers, setPageNumbers] = useState(
-    totalPages <= 5 ? rangeArr(1, totalPages) : rangeArr(1, 5)
-  )
+  const {
+    selectedCity,
+    selectedState,
+    currentPage,
+    setPageNumbers,
+    handlePageChange,
+    totalPages,
+    currentItems
+  } = useContext(StoreContext) as IStoreContext
 
   useEffect(() => {
     const getPageNumbers = (start: any, end: any) =>
@@ -40,10 +30,6 @@ const StoreList = () => {
       getPageNumbers(currentPage - 2, currentPage + 2)
     }
   }, [currentPage, selectedCity, selectedState])
-
-  const handlePageChange = (pageNumber: number) => {
-    setCurrentPage(pageNumber)
-  }
 
   useEffect(() => {
     handlePageChange(1)
@@ -62,11 +48,7 @@ const StoreList = () => {
         ))}
       </ul>
       <div>
-        <Pagination
-          pageNumbers={pageNumbers}
-          handlePageChange={handlePageChange}
-          currentPage={currentPage}
-        />
+        <Pagination />
       </div>
     </div>
   )

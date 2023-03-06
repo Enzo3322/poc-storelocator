@@ -1,13 +1,14 @@
 import { useContext } from 'react'
-import { StoreContext } from '../../../../context'
+import { StoreContext, IStoreContext } from '../../../../context'
 
 const Pagination = () => {
-  const { pageNumbers, handlePageChange, currentPage } =
-    useContext<any>(StoreContext)
+  const { pageNumbers, handlePageChange, currentPage } = useContext(
+    StoreContext
+  ) as IStoreContext
 
   return (
     <div>
-      {pageNumbers.map(pageNumber => (
+      {pageNumbers.map((pageNumber: any) => (
         <button
           key={pageNumber}
           onClick={() => handlePageChange(pageNumber)}

@@ -8,6 +8,8 @@ import {
 } from 'react'
 import { storesData } from '../data'
 
+import { rangeArr } from '../utils/rangeArr'
+
 export interface IStoreContext {
   selectedState: string
   setSelectedState: SetStateAction<any>
@@ -20,6 +22,12 @@ export interface IStoreContext {
   stores: Record<string, string>[]
   setStores: SetStateAction<any>
   pageNumbers: Array<number>
+  setPageNumbers: SetStateAction<any>
+  currentPage: number
+  setCurrentPage: number
+  handlePageChange: any
+  totalPages: number
+  currentItems: any
 }
 
 export const StoreContext = createContext<IStoreContext | {}>({})
@@ -32,6 +40,7 @@ const StoreContextProvider = ({
   const [selectedState, setSelectedState] = useState()
   const [selectedCity, setSelectedCity] = useState()
   const [searchTerm, setSearchTerm] = useState('')
+  const [currentPage, setCurrentPage] = useState(1)
   const cities = [
     ...new Set(
       storesData.map(store => {
@@ -44,6 +53,25 @@ const StoreContextProvider = ({
   const states = [...new Set(storesData.map(store => store.estado))]
   const allStores = storesData
   const [stores, setStores] = useState(allStores)
+
+  
+  const itemsPerPage = 5
+
+  // calcular o índice do primeiro item da página atual
+  const indexOfLastItem = currentPage * itemsPerPage
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage
+
+  // definir os itens que serão renderizados na página atual
+  const currentItems = stores.slice(indexOfFirstItem, indexOfLastItem)
+
+  // calcular o número total de páginas
+  const totalPages = Math.ceil(stores.length / itemsPerPage)
+  const [pageNumbers, setPageNumbers] = useState(
+    totalPages <= 5 ? rangeArr(1, totalPages) : rangeArr(1, 5)
+  )
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber)
+  }
 
   useEffect(() => {
     setSelectedCity(undefined)
@@ -83,8 +111,13 @@ const StoreContextProvider = ({
         states,
         stores,
         setStores,
-        pageNumbers
-
+        pageNumbers,
+        setPageNumbers,
+        currentPage,
+        setCurrentPage,
+        handlePageChange,
+        totalPages,
+        currentItems
       }}
     >
       {children}
