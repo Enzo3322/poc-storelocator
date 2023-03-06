@@ -13,34 +13,34 @@ import { rangeArr } from '../utils/rangeArr'
 export interface IStoreContext {
   selectedState: string
   setSelectedState: SetStateAction<any>
-  selectedCity: string
+  selectedCity: string | undefined
   setSelectedCity: SetStateAction<any>
   searchTerm: string
   setSearchTerm: SetStateAction<any>
-  cities: string[]
+  cities: string[] | undefined
   states: string[]
   stores: Record<string, string>[]
   setStores: SetStateAction<any>
   pageNumbers: Array<number>
   setPageNumbers: SetStateAction<any>
   currentPage: number
-  setCurrentPage: number
+  setCurrentPage: SetStateAction<number>
   handlePageChange: any
   totalPages: number
-  currentItems: any
+  currentItems: Record<string, string>[]
 }
 
-export const StoreContext = createContext<IStoreContext | {}>({})
+export const StoreContext = createContext({} as IStoreContext)
 
 const StoreContextProvider = ({
   children
 }: {
   children: ReactNode
 }): ReactElement => {
-  const [selectedState, setSelectedState] = useState()
-  const [selectedCity, setSelectedCity] = useState()
-  const [searchTerm, setSearchTerm] = useState('')
-  const [currentPage, setCurrentPage] = useState(1)
+  const [selectedState, setSelectedState] = useState<string>('')
+  const [selectedCity, setSelectedCity] = useState<string | undefined>('')
+  const [searchTerm, setSearchTerm] = useState<string>('')
+  const [currentPage, setCurrentPage] = useState<number>(1)
   const cities = [
     ...new Set(
       storesData.map(store => {
@@ -54,7 +54,6 @@ const StoreContextProvider = ({
   const allStores = storesData
   const [stores, setStores] = useState(allStores)
 
-  
   const itemsPerPage = 5
 
   // calcular o índice do primeiro item da página atual

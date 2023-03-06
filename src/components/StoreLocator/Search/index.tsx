@@ -1,9 +1,10 @@
-import { useContext, SetStateAction, useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { StoreContext, IStoreContext } from '../../../context'
 import { storesData } from '../../../data'
 
 const Search = () => {
-  const { selectedState,
+  const {
+    selectedState,
     setSelectedState,
     states,
     setSelectedCity,
@@ -11,7 +12,8 @@ const Search = () => {
     setSearchTerm,
     searchTerm,
     cities,
-    setStores} = useContext(StoreContext) as IStoreContext
+    setStores
+  } = useContext(StoreContext) as IStoreContext
 
   function handleSearch({
     selectedCity,
@@ -50,7 +52,7 @@ const Search = () => {
       return setStores(storeSearchCity)
     }
     if (!selectedCity && !selectedState && searchTerm) {
-      const filteredStores: any = allStores.filter((store: any) => {
+      const filteredStores = allStores.filter((store: any) => {
         return store.nomeLoja.toLowerCase().includes(searchTerm.toLowerCase())
       })
       return setStores(filteredStores)
@@ -83,7 +85,7 @@ const Search = () => {
         <option defaultChecked defaultValue="">
           SELECIONE UM ESTADO
         </option>
-        {states.map((o: any) => (
+        {states.map(o => (
           <option key={o} value={o}>
             {o}
           </option>
@@ -97,7 +99,7 @@ const Search = () => {
           <option defaultChecked defaultValue="">
             SELECIONE UMA CIDADE
           </option>
-          {cities?.map((o: string) => (
+          {cities?.map(o => (
             <option key={o} value={o}>
               {o}
             </option>
