@@ -1,42 +1,17 @@
 import { useContext, SetStateAction, useEffect } from 'react'
-import StoreContext, { IStoreContext } from '../../../context'
+import { StoreContext, IStoreContext } from '../../../context'
 import { storesData } from '../../../data'
 
-interface SearchProps {
-  selectedState?: string
-  setSelectedState: SetStateAction<any>
-  selectedCity?: string
-  setSelectedCity: SetStateAction<any>
-  searchTerm: string | null
-  setSearchTerm: SetStateAction<any>
-  cities: any
-  states: string[]
-  stores: any
-  setStores: SetStateAction<any>
-}
-const {
-  selectedState,
-  setSelectedState,
-  states,
-  setSelectedCity,
-  selectedCity,
-  setSearchTerm,
-  searchTerm,
-  cities,
-  setStores
-} = useContext(StoreContext)
 const Search = () => {
-  // const {
-  //   selectedState,
-  //   setSelectedState,
-  //   states,
-  //   setSelectedCity,
-  //   selectedCity,
-  //   setSearchTerm,
-  //   searchTerm,
-  //   cities,
-  //   setStores
-  // } = props
+  const { selectedState,
+    setSelectedState,
+    states,
+    setSelectedCity,
+    selectedCity,
+    setSearchTerm,
+    searchTerm,
+    cities,
+    setStores} = useContext(StoreContext) as IStoreContext
 
   function handleSearch({
     selectedCity,
@@ -108,7 +83,7 @@ const Search = () => {
         <option defaultChecked defaultValue="">
           SELECIONE UM ESTADO
         </option>
-        {states.map(o => (
+        {states.map((o: any) => (
           <option key={o} value={o}>
             {o}
           </option>

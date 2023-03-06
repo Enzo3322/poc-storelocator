@@ -1,17 +1,12 @@
 import Pagination from './Pagination'
 import StoreItem from './StoreItem'
 import { rangeArr } from '../../../utils/rangeArr'
+import { StoreContext, IStoreContext } from '../../../context'
 
-interface StoreListProps {
-  stores: Record<string, string>[]
-  selectedCity?: string
-  selectedState?: string
-}
+import React, { useEffect, useState, useContext } from 'react'
 
-import React, { useEffect, useState } from 'react'
-
-const StoreList = (props: StoreListProps) => {
-  const { stores, selectedCity, selectedState } = props
+const StoreList = () => {
+  const { stores, selectedCity, selectedState } = useContext<any>(StoreContext)
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 5
 
@@ -30,11 +25,11 @@ const StoreList = (props: StoreListProps) => {
   const [pageNumbers, setPageNumbers] = useState(
     totalPages <= 5 ? rangeArr(1, totalPages) : rangeArr(1, 5)
   )
-  
+
   useEffect(() => {
     const getPageNumbers = (start: any, end: any) =>
       setPageNumbers(rangeArr(start, end))
-      
+
     if (totalPages < 5) {
       getPageNumbers(1, totalPages)
     } else if (currentPage <= 3) {
@@ -62,7 +57,7 @@ const StoreList = (props: StoreListProps) => {
   return (
     <div>
       <ul>
-        {currentItems.map(item => (
+        {currentItems.map((item: any) => (
           <StoreItem store={item} />
         ))}
       </ul>

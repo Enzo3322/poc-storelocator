@@ -1,10 +1,10 @@
 interface StoreItemProps {
-  store: Record<string, string>;
+  store: Record<string, string>
 }
 
 const StoreItem = (props: StoreItemProps) => {
-  const { store } = props;
-  return <div>{store.nomeLoja}</div>;
-};
+  const { store } = props
+  return <div>{store.nomeLoja}</div>
+}
 
-export default StoreItem;
+export default StoreItem

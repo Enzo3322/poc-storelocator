@@ -1,13 +1,13 @@
-interface PaginationProps {
-  pageNumbers: Array<number>;
-  handlePageChange: any;
-  currentPage: number;
-}
-const Pagination = (props: PaginationProps) => {
-  const { pageNumbers, handlePageChange, currentPage } = props;
+import { useContext } from 'react'
+import { StoreContext } from '../../../../context'
+
+const Pagination = () => {
+  const { pageNumbers, handlePageChange, currentPage } =
+    useContext<any>(StoreContext)
+
   return (
     <div>
-      {pageNumbers.map((pageNumber) => (
+      {pageNumbers.map(pageNumber => (
         <button
           key={pageNumber}
           onClick={() => handlePageChange(pageNumber)}
@@ -17,7 +17,7 @@ const Pagination = (props: PaginationProps) => {
         </button>
       ))}
     </div>
-  );
-};
+  )
+}
 
-export default Pagination;
+export default Pagination
