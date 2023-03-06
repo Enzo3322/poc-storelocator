@@ -12,20 +12,20 @@ import { rangeArr } from '../utils/rangeArr'
 
 export interface IStoreContext {
   selectedState: string
-  setSelectedState: SetStateAction<any>
-  selectedCity: string | undefined
-  setSelectedCity: SetStateAction<any>
+  setSelectedState: SetStateAction<string>
+  selectedCity: string
+  setSelectedCity: SetStateAction<string>
   searchTerm: string
   setSearchTerm: SetStateAction<any>
-  cities: string[] | undefined
+  cities: string[]
   states: string[]
   stores: Record<string, string>[]
-  setStores: SetStateAction<any>
-  pageNumbers: Array<number>
-  setPageNumbers: SetStateAction<any>
+  setStores: any
+  pageNumbers: number[]
+  setPageNumbers: SetStateAction<number[]>
   currentPage: number
   setCurrentPage: SetStateAction<number>
-  handlePageChange: any
+  handlePageChange: (pageNumber: number) => void
   totalPages: number
   currentItems: Record<string, string>[]
 }
@@ -38,7 +38,7 @@ const StoreContextProvider = ({
   children: ReactNode
 }): ReactElement => {
   const [selectedState, setSelectedState] = useState<string>('')
-  const [selectedCity, setSelectedCity] = useState<string | undefined>('')
+  const [selectedCity, setSelectedCity] = useState<string>('')
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [currentPage, setCurrentPage] = useState<number>(1)
   const cities = [
@@ -52,7 +52,7 @@ const StoreContextProvider = ({
   ]
   const states = [...new Set(storesData.map(store => store.estado))]
   const allStores = storesData
-  const [stores, setStores] = useState(allStores)
+  const [stores, setStores] = useState<Record<string, string>[]>(allStores)
 
   const itemsPerPage = 5
 
@@ -65,7 +65,7 @@ const StoreContextProvider = ({
 
   // calcular o número total de páginas
   const totalPages = Math.ceil(stores.length / itemsPerPage)
-  const [pageNumbers, setPageNumbers] = useState(
+  const [pageNumbers, setPageNumbers] = useState<Number[]>(
     totalPages <= 5 ? rangeArr(1, totalPages) : rangeArr(1, 5)
   )
   const handlePageChange = (pageNumber: number) => {
@@ -73,7 +73,7 @@ const StoreContextProvider = ({
   }
 
   useEffect(() => {
-    setSelectedCity(undefined)
+    setSelectedCity('')
   }, [selectedState])
 
   useEffect(() => {
@@ -95,7 +95,7 @@ const StoreContextProvider = ({
         )
       )
     }
-  }, [selectedState, selectedCity])
+  }, [selectedState, selectedCity, searchTerm])
 
   return (
     <StoreContext.Provider

@@ -2,6 +2,14 @@ import { useContext, useEffect } from 'react'
 import { StoreContext, IStoreContext } from '../../../context'
 import { storesData } from '../../../data'
 
+interface ISearchProps {
+  selectedCity: string
+  selectedState: string
+  searchTerm: string
+  setStores: any
+  allStores: any
+}
+
 const Search = () => {
   const {
     selectedState,
@@ -20,7 +28,7 @@ const Search = () => {
     selectedState,
     allStores,
     searchTerm
-  }: any) {
+  }: ISearchProps) {
     if (selectedState && !searchTerm && !selectedCity) {
       const storeByState = allStores.filter((store: any) => {
         return store.estado === selectedState
